@@ -1,19 +1,20 @@
 /* START OF CONFIG */
 
 // set a value to set the number of stars of that type to generate
-// set null to pick randomly between 0-3
+// set null to pick randomly from 1 to 4
 const stars = {
   simpleStar: null,
   crossStar: null,
   classicStar: null,
   classicStarUnfilled: null,
-  curveStar: null,
+  curveStar: 10,
   arcStar: null
 }
 
+const randInt = (a,b) => Math.floor(Math.random() * (b-a)) + a
 for (const [type, count] of Object.entries(stars)) {
   if (count === null) {
-    stars[type] = Math.floor(Math.random() * 4)
+    stars[type] = randInt(1, 5)
   }
 }
 
@@ -112,11 +113,43 @@ const circle = () => {
   return t.lines()
 }
 
+const starCount = Object.values(stars).reduce((a,b) => a+b)
+const n = Math.floor(Math.sqrt(starCount)) + 1
+
+console.log(starCount)
+
+const available = []
+
+for (let i = 0; i < n; i++) {
+  for (let j = 0; j < n; j++) {
+    available.push([i, j])
+  }
+}
+
+const takeAvailable = () => available.splice(randInt(0, available.length), 1)[0]
+
+const padding = 10
+const offsetW = Math.floor((width - (2 * padding)) / n)
+const offsetH = Math.floor((height - (2 * padding)) / n)
+
 
 for (const [type, count] of Object.entries(stars)) {
-  const fn = eval(type)
-  const star = fn()
-  bt.join(finalLines, star)
+  times(() => {
+    const fn = eval(type)
+    const star = fn()
+    const bounds = bt.bounds(star)
+
+    const [gridX, gridY] = takeAvailable()
+    const posX = gridX * offsetW + randInt(0, offsetW) + padding
+    const posY = gridY * offsetH + randInt(0, offsetH) + padding
+
+    const size = randInt(2, 5)
+    const scale = size / bounds.width
+
+    bt.scale(star, scale)
+    bt.translate(star, [posX, posY], bounds.cc)
+    bt.join(finalLines, star)
+  }, count)
 }
 
 drawLines(finalLines);
