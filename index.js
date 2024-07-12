@@ -3,6 +3,9 @@
 // randomly rotate each star
 const enableRotation = false
 
+// give the moon craters
+const enableCraters = true
+
 // set a value to set the number of stars of that type to generate
 // set null to pick randomly from 1 to 4
 const stars = {
@@ -168,7 +171,7 @@ const moon = () => {
   const bounds = bt.bounds(lines)
 
   // craters
-  times(() => {
+  if (enableCraters) times(() => {
     const c = circle(2)
 
     bt.translate(c, [randInt(0, 35), randInt(0, 70)], bt.bounds(c).cc)
