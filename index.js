@@ -12,5 +12,14 @@ const simpleStar = () => {
   ]
 }
 
-finalLines.push(...simpleStar())
+const crossStar = () => {
+  return bt.rotate(
+    simpleStar(),
+    45
+  )
+}
+
+bt.join(finalLines, simpleStar())
+bt.join(finalLines, crossStar())
+
 drawLines(finalLines);
