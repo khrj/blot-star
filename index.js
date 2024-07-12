@@ -1,3 +1,27 @@
+/* START OF CONFIG */
+
+// set a value to set the number of stars of that type to generate
+// set null to pick randomly between 0-3
+const stars = {
+  simpleStar: null,
+  crossStar: null,
+  classicStar: null,
+  classicStarUnfilled: null,
+  curveStar: null,
+  arcStar: null
+}
+
+for (const [type, count] of Object.entries(stars)) {
+  if (count === null) {
+    stars[type] = Math.floor(Math.random() * 4)
+  }
+}
+
+/* END OF CONFIG */
+
+
+/* drawing starts */
+
 const width = 100;
 const height = 100;
 
@@ -81,11 +105,18 @@ const arcStar = () => {
   return t.lines()
 }
 
-bt.join(finalLines, simpleStar())
-bt.join(finalLines, crossStar())
-bt.join(finalLines, classicStar())
-bt.join(finalLines, classicStarUnfilled())
-bt.join(finalLines, curveStar())
-bt.join(finalLines, arcStar())
+const circle = () => {
+  const t = new bt.Turtle()
+  const radius = 10
+  t.arc(360, radius)
+  return t.lines()
+}
+
+
+for (const [type, count] of Object.entries(stars)) {
+  const fn = eval(type)
+  const star = fn()
+  bt.join(finalLines, star)
+}
 
 drawLines(finalLines);
