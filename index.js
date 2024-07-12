@@ -55,9 +55,24 @@ const classicStarUnfilled = () => {
   return t.lines()
 }
 
+const curveStar = () => {
+  return [bt.catmullRom([
+    [0, 50],
+    [40, 60],
+    [50, 100],
+    [60, 60],
+    [100, 50],
+    [60, 40],
+    [50, 0],
+    [40, 40],
+    [0, 50]
+  ])]
+}
+
 bt.join(finalLines, simpleStar())
 bt.join(finalLines, crossStar())
 bt.join(finalLines, classicStar())
 bt.join(finalLines, classicStarUnfilled())
+bt.join(finalLines, curveStar())
 
 drawLines(finalLines);
