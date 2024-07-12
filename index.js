@@ -38,8 +38,26 @@ const classicStar = () => {
   return t.lines()
 }
 
+const classicStarUnfilled = () => {
+  const t = new bt.Turtle()
+  const size = 10
+
+  t.left(90)
+  t.right(18)
+
+  times(() => {
+    t.forward(size)
+    t.left(90 - 18)
+    t.forward(size)
+    t.right(180 - 36)
+  }, 5)
+
+  return t.lines()
+}
+
 bt.join(finalLines, simpleStar())
 bt.join(finalLines, crossStar())
 bt.join(finalLines, classicStar())
+bt.join(finalLines, classicStarUnfilled())
 
 drawLines(finalLines);
