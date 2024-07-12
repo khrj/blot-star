@@ -1,5 +1,8 @@
 /* START OF CONFIG */
 
+// randomly rotate each star
+const enableRotation = false
+
 // set a value to set the number of stars of that type to generate
 // set null to pick randomly from 1 to 4
 const stars = {
@@ -11,15 +14,14 @@ const stars = {
   arcStar: null
 }
 
+/* END OF CONFIG */
+
 const randInt = (a,b) => Math.floor(Math.random() * (b-a)) + a
 for (const [type, count] of Object.entries(stars)) {
   if (count === null) {
     stars[type] = randInt(1, 5)
   }
 }
-
-/* END OF CONFIG */
-
 
 /* drawing starts */
 
@@ -147,6 +149,7 @@ for (const [type, count] of Object.entries(stars)) {
     const scale = size / bounds.width
 
     bt.scale(star, scale)
+    if (enableRotation) bt.rotate(star, randInt(0, 360))
     bt.translate(star, [posX, posY], bounds.cc)
     bt.join(finalLines, star)
   }, count)
