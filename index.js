@@ -1,3 +1,9 @@
+/*
+@title: Nightsky
+@author: khrj
+@snapshot: craterless.png
+*/
+
 /* START OF CONFIG */
 
 // randomly rotate each star
