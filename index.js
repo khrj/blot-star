@@ -108,10 +108,9 @@ const arcStar = () => {
   return t.lines()
 }
 
-const circle = () => {
+const circle = (r) => {
   const t = new bt.Turtle()
-  const radius = 10
-  t.arc(360, radius)
+  t.arc(360, r)
   return t.lines()
 }
 
@@ -151,7 +150,7 @@ for (const [type, count] of Object.entries(stars)) {
     bt.scale(star, scale)
     if (enableRotation) bt.rotate(star, randInt(0, 360))
     bt.translate(star, [posX, posY], bounds.cc)
-    // bt.join(finalLines, star)
+    bt.join(finalLines, star)
   }, count)
 }
 
@@ -167,6 +166,15 @@ const moon = () => {
   const arc = lines[0]
   
   const bounds = bt.bounds(lines)
+
+  // craters
+  times(() => {
+    const c = circle(2)
+
+    bt.translate(c, [randInt(0, 35), randInt(0, 70)], bt.bounds(c).cc)
+    bt.cut(c, lines)
+    bt.join(lines, c)
+  }, 5)
   
   bt.rotate(lines, -40)
   bt.translate(lines, [width/2,height/2], bt.bounds(lines).cc)
@@ -174,6 +182,14 @@ const moon = () => {
   return lines
 }
 
-bt.join(finalLines, moon())
+const theMoon = moon()
+bt.scale(theMoon, 0.5)
+bt.translate(theMoon, [72,76], bt.bounds(theMoon).cc)
+
+const guard = circle(25)
+bt.translate(guard, [72,76], bt.bounds(guard).cc)
+bt.cover(finalLines, guard)
+
+bt.join(finalLines, theMoon)
 
 drawLines(finalLines)
