@@ -151,8 +151,29 @@ for (const [type, count] of Object.entries(stars)) {
     bt.scale(star, scale)
     if (enableRotation) bt.rotate(star, randInt(0, 360))
     bt.translate(star, [posX, posY], bounds.cc)
-    bt.join(finalLines, star)
+    // bt.join(finalLines, star)
   }, count)
 }
 
-drawLines(finalLines);
+const moon = () => {
+  const t = new bt.Turtle()
+  const size = 35
+  
+  t.arc(180, size)
+  t.right(209)
+  t.arc(-122, 40)
+    
+  const lines = t.lines()
+  const arc = lines[0]
+  
+  const bounds = bt.bounds(lines)
+  
+  bt.rotate(lines, -40)
+  bt.translate(lines, [width/2,height/2], bt.bounds(lines).cc)
+
+  return lines
+}
+
+bt.join(finalLines, moon())
+
+drawLines(finalLines)
