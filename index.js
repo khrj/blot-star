@@ -69,10 +69,23 @@ const curveStar = () => {
   ])]
 }
 
+const arcStar = () => {
+  const t = new bt.Turtle()
+  const radius = 10
+
+  times(() => {
+    t.arc(90, radius)
+    t.right(180)
+  }, 4)
+
+  return t.lines()
+}
+
 bt.join(finalLines, simpleStar())
 bt.join(finalLines, crossStar())
 bt.join(finalLines, classicStar())
 bt.join(finalLines, classicStarUnfilled())
 bt.join(finalLines, curveStar())
+bt.join(finalLines, arcStar())
 
 drawLines(finalLines);
